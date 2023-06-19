@@ -22,7 +22,7 @@ def main():
 
     while True:
         menu()
-        option = int(input("Select a Menu Option: "))
+        option = int(input("\nSelect a Menu Option: "))
         if option == 0:
             break
         elif option == 1:
