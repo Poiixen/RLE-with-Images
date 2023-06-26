@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-print("test")
-=======
 from console_gfx import ConsoleGfx
 
 
@@ -50,4 +47,3 @@ def main():
 
 if __name__ == "__main__":
     main()
->>>>>>> d8b7b24bff5df436904f76bf2139366f52597731
