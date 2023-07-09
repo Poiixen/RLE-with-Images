@@ -18,15 +18,24 @@ def to_hex_string(data):
     return output
 
 
-def count_runs(flat_data):
-    list = []
-    for num in flat_data:
-        if num not in list:  # checks if num is previously in list
-            list.append(num)  # if not in list, adds num
+def count_runs(flat_data): # counts unique amount of runs that passes through function
+    runs = 1
+    count = 1
+    current = flat_data[0]
+    for num in flat_data[1:]:
+        if count >= 15: # breaks off into a new run if the count is more than 15, resetting the count 
+            runs += 1
+            count = 1
+        if current == num: 
+            count += 1
+        else:
+            count = 1 # if current is unequal to the number, changes the current to new number, while resetting the count
+            current = num
+            runs += 1
 
-    return len(list)  # returns unique amount of integers passed through
+    return runs
 
-
+print(count_runs([4,4,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,8,7]))
 
 
 
@@ -47,4 +56,3 @@ def string_to_data(data_string):
 
 
 print(to_hex_string([3, 15, 6, 4]))
-print(count_runs([15, 15, 15, 4, 4, 4, 4, 4, 4]))
