@@ -97,15 +97,15 @@ def string_to_data(data_string):
     for char in data_string: # iterates through input string, and replaces letter to num equivalent
         if char == "a" or char == "A":
             list.append(10)
-        if char == "b" or char == "B":
+        elif char == "b" or char == "B":
             list.append(11)
-        if char == "c" or char == "C": 
+        elif char == "c" or char == "C": 
             list.append(12)
-        if char == "d" or char == "D":
+        elif char == "d" or char == "D":
             list.append(13)
-        if char == "e" or char == "E":
+        elif char == "e" or char == "E":
             list.append(14)
-        if char == "f" or char == "F":
+        elif char == "f" or char == "F":
             list.append(15)
         else:
             list.append(int(char)) # if it is not a letter, it appends the integer version of char
@@ -158,6 +158,5 @@ def main():
 
 if __name__ == "__main__":
     main()
-
 
 
