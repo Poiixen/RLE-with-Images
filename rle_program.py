@@ -1,6 +1,5 @@
 from console_gfx import ConsoleGfx
 
-# FIXME define functions to work with menu options
 
 def to_hex_string(data):
     output = ""
@@ -111,6 +110,37 @@ def string_to_data(data_string):
             list.append(int(char)) # if it is not a letter, it appends the integer version of char
     return list 
 
+def to_rle_string(rle_string): #input to_rle_string([15, 15, 6, 4]) yields string "15f:64"
+    output = ""
+    conversion_dict = {10: "a:", 11: "b:", 12: "c:", 13: "d:", 14: "e:", 15: "f:"}
+    if len(rle_string) % 2 == 0: # if even
+        if rle_string[1] in conversion_dict:
+            rle_string[1] = conversion_dict[rle_string[1]] # replaces second term with corrosponding dictionary value. ex: [15, 15] = [15, "f:"]
+    if len(rle_string) % 2 == 1: # if odd
+        if rle_string[2] in conversion_dict:
+            rle_string[2] = conversion_dict[rle_string[2]]
+    for element in rle_string: # adds every element in rle_string list to the output string, made possible with str() around the integers.
+        output += str(element) 
+    return output
+
+def string_to_rle(rle_string): #15f:64 => [15, 15, 6, 4]
+    output = []
+    conversion_dict = {10: "a", 11: "b", 12: "c", 13: "d", 14: "e", 15: "f", "f": 15}
+    rle_list = rle_string.split(":")
+    for element in rle_list:
+        if len(element) == 3: # splits 3 characters into 2 and one. ex: "15f" => "15" and "f"   
+            output.append(int(element[:2]))
+            if element[-1] in conversion_dict:
+                output.append(conversion_dict[element[-1]])
+            else:
+                output.append(element[-1]) 
+        elif len(element) == 2: # similarly splits into first char and last char if element == 2. ex: "2e" => "2" and "e
+            output.append(int(element[0])) 
+            if element[1] in conversion_dict:
+                output.append(conversion_dict[element[1]])
+            else:
+                output.append(int(element[-1]))
+    return output
 
 # define a function that prints menu to improve readibility
 def menu():
@@ -119,11 +149,10 @@ def menu():
         "\n4. Read RLE Hex String\n5. Read Data Hex String\n6. Display Image\n7. Display RLE String\n8. Display Hex RLE Data\n9. Display Hex Flat Data",
     )
 
-
 # define a function that will fix zybooks import error
 def main():
     # display welcome message
-    print("\nWelcome to the RLE inmage encoder!")
+    print("\nWelcome to the RLE image encoder!")
 
     # this function displays the spectrum
     print("\nDisplaying Spectrum Image:")
@@ -136,24 +165,37 @@ def main():
         option = int(input("\nSelect a Menu Option: "))
         if option == 0:
             break
-        elif option == 1:
+        elif option == 1: 
             # loads filename entered by user
             image_data = ConsoleGfx.load_file(input("Enter name of file to load:"))
-            pass
-        elif option == 2:
+        elif option == 2: 
             image_data = ConsoleGfx.test_image
             print("Test image data loaded.")
-            pass
-        elif option == 3:
-            pass
-        elif option == 4:
-            pass
+        elif option == 3: 
+            image_data = decode_rle(string_to_rle(input("Enter an RLE string to be decoded:")))
+        elif option == 4: 
+            image_data = decode_rle(string_to_data(input("Enter the hex string holding RLE data:")))
         elif option == 5:
-            pass
-        elif option == 6:
+            image_data = string_to_data(input("Enter the hex string holding flat data:"))
+        elif option == 6: 
             # display image_data
+            print("Displaying image...")
             ConsoleGfx.display_image(image_data)
-            pass
+        elif option == 7: 
+            image_data = encode_rle(image_data)
+            print(f"RLE representation: {to_rle_string(image_data)}")
+
+        elif option == 8: 
+            image_data = encode_rle(image_data)
+            print(f"RLE hex values: {to_hex_string(image_data)}")
+
+        elif option == 9: 
+            image_data = encode_rle(image_data)
+            print(f"Flat hex values: {to_rle_string(image_data)}")
+
+        else:
+            print("Error! Invalid input.") 
+        print(image_data)
 
 
 if __name__ == "__main__":
