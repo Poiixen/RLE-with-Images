@@ -3,8 +3,7 @@ from console_gfx import ConsoleGfx
 
 def to_hex_string(data):
     output = ""
-    for num in data:
-        print(num)  # this for checks every number in data, adding each number after conversion to output string
+    for num in data:  # this for checks every number in data, adding each number after conversion to output string
         if int(num) < 10 or int(num) > 15:
             output += str(num)
         elif num == 10:   # for numbers less than 10 or greater than 15, they stay the same
@@ -194,9 +193,8 @@ def main():
             image_data = encode_rle(image_data)
             print(f"RLE hex values: {to_hex_string(image_data)}")
 
-        elif option == 9: #wrong
-            
-            print(f"Flat hex values: {to_rle_string(image_data)}")
+        elif option == 9: #wrong           
+            print(f"Flat hex values: {to_hex_string(image_data)}")
 
         else:
             print("Error! Invalid input.") 
