@@ -3,21 +3,22 @@ from console_gfx import ConsoleGfx
 
 def to_hex_string(data):
     output = ""
-    for num in data:  # this for checks every number in data, adding each number after conversion to output string
-        if num < 10 or num > 15:
+    for num in data:
+        print(num)  # this for checks every number in data, adding each number after conversion to output string
+        if int(num) < 10 or int(num) > 15:
             output += str(num)
-        if num == 10:   # for numbers less than 10 or greater than 15, they stay the same
+        elif num == 10:   # for numbers less than 10 or greater than 15, they stay the same
             output += "a" # numbers between 10 and 15 changes the num input to its letter equivalent
-        if num == 11:
+        elif num == 11:
             output += "b" 
-        if num == 12:
+        elif num == 12:
             output += "c"
-        if num == 13:
+        elif num == 13:
             output += "d"
-        if num == 14:
+        elif num == 14:
             output += "e"
-        if num == 15:
-            output += "f"
+        elif num == 15:
+            output += "f"  
     return output
 
 def count_runs(flat_data): # counts unique amount of runs that passes through function
@@ -91,6 +92,7 @@ def decode_rle(data_string):
         list.extend([value] * repeated_times)
     return list
 
+
 def string_to_data(data_string): 
     list = []
     for char in data_string: # iterates through input string, and replaces letter to num equivalent
@@ -112,20 +114,21 @@ def string_to_data(data_string):
 
 def to_rle_string(rle_string): #input to_rle_string([15, 15, 6, 4]) yields string "15f:64"
     output = ""
-    conversion_dict = {10: "a:", 11: "b:", 12: "c:", 13: "d:", 14: "e:", 15: "f:"}
-    if len(rle_string) % 2 == 0: # if even
-        if rle_string[1] in conversion_dict:
-            rle_string[1] = conversion_dict[rle_string[1]] # replaces second term with corrosponding dictionary value. ex: [15, 15] = [15, "f:"]
-    if len(rle_string) % 2 == 1: # if odd
-        if rle_string[2] in conversion_dict:
-            rle_string[2] = conversion_dict[rle_string[2]]
-    for element in rle_string: # adds every element in rle_string list to the output string, made possible with str() around the integers.
-        output += str(element) 
-    return output
+    conversion_dict = {10: "a", 11: "b", 12: "c", 13: "d", 14: "e", 15: "f"}
+    print(rle_string)
+    for i, element in enumerate(rle_string):
+        if i % 2 == 1:
+            # Check if the element is in the conversion_dict
+            if element in conversion_dict:
+                element = conversion_dict[element]
+            output += str(element) + ":"
+        else:
+            output += str(element)
+    return output.rstrip(":") 
 
 def string_to_rle(rle_string): #15f:64 => [15, 15, 6, 4]
     output = []
-    conversion_dict = {10: "a", 11: "b", 12: "c", 13: "d", 14: "e", 15: "f", "f": 15}
+    conversion_dict = {"a": 10, "b": 11, "c": 12, "d": 13, "e": 14, "f": 15}
     rle_list = rle_string.split(":")
     for element in rle_list:
         if len(element) == 3: # splits 3 characters into 2 and one. ex: "15f" => "15" and "f"   
@@ -139,8 +142,10 @@ def string_to_rle(rle_string): #15f:64 => [15, 15, 6, 4]
             if element[1] in conversion_dict:
                 output.append(conversion_dict[element[1]])
             else:
-                output.append(int(element[-1]))
+                output.append((element[-1]))
     return output
+
+
 
 # define a function that prints menu to improve readibility
 def menu():
@@ -181,22 +186,20 @@ def main():
             # display image_data
             print("Displaying image...")
             ConsoleGfx.display_image(image_data)
-        elif option == 7: 
+        elif option == 7: # something here does not register more than 2 or 3 characters 
             image_data = encode_rle(image_data)
             print(f"RLE representation: {to_rle_string(image_data)}")
-
+            
         elif option == 8: 
             image_data = encode_rle(image_data)
             print(f"RLE hex values: {to_hex_string(image_data)}")
 
-        elif option == 9: 
-            image_data = encode_rle(image_data)
+        elif option == 9: #wrong
+            
             print(f"Flat hex values: {to_rle_string(image_data)}")
 
         else:
             print("Error! Invalid input.") 
-        print(image_data)
-
 
 if __name__ == "__main__":
     main()
