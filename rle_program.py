@@ -4,14 +4,14 @@ from console_gfx import ConsoleGfx
 def to_hex_string(data):
     output = ""
     for num in data:  # this for checks every number in data, adding each number after conversion to output string
-        if int(num) < 10 or int(num) > 15:
+        if int(num) < 10 or int(num) > 15: # for numbers less than 10 or greater than 15, they stay the same
             output += str(num)
-        elif num == 10:   # for numbers less than 10 or greater than 15, they stay the same
-            output += "a" # numbers between 10 and 15 changes the num input to its letter equivalent
+        elif num == 10:   
+            output += "a" 
         elif num == 11:
             output += "b" 
         elif num == 12:
-            output += "c"
+            output += "c" # numbers between 10 and 15 changes the num input to its letter equivalent
         elif num == 13:
             output += "d"
         elif num == 14:
@@ -120,10 +120,10 @@ def to_rle_string(rle_string): #input to_rle_string([15, 15, 6, 4]) yields strin
             # Check if the element is in the conversion_dict
             if element in conversion_dict:
                 element = conversion_dict[element]
-            output += str(element) + ":"
+            output += str(element) + ":" # adds a colon after every second element
         else:
             output += str(element)
-    return output.rstrip(":") 
+    return output.rstrip(":")  # strips the last lingering colon
 
 def string_to_rle(rle_string): #15f:64 => [15, 15, 6, 4]
     output = []
@@ -141,7 +141,7 @@ def string_to_rle(rle_string): #15f:64 => [15, 15, 6, 4]
             if element[1] in conversion_dict:
                 output.append(conversion_dict[element[1]])
             else:
-                output.append((element[-1]))
+                output.append((element[-1])) 
     return output
 
 
@@ -166,20 +166,20 @@ def main():
     
     while True:
         menu()
-        option = int(input("\nSelect a Menu Option: "))
+        option = int(input("\nSelect a Menu Option: ")) # prompts user to select an option. If option is not in menu prints an error
         if option == 0:
             break
         elif option == 1: 
             # loads filename entered by user
-            image_data = ConsoleGfx.load_file(input("Enter name of file to load:"))
+            image_data = ConsoleGfx.load_file(input("Enter name of file to load:")) 
         elif option == 2: 
             image_data = ConsoleGfx.test_image
             print("Test image data loaded.")
-        elif option == 3: 
+        elif option == 3: # calls appropriate functions to read RLE string. Requires user input with string
             image_data = decode_rle(string_to_rle(input("Enter an RLE string to be decoded:")))
         elif option == 4: 
             image_data = decode_rle(string_to_data(input("Enter the hex string holding RLE data:")))
-        elif option == 5:
+        elif option == 5: # also prompts user to input a hex string that will be stored as the new image data
             image_data = string_to_data(input("Enter the hex string holding flat data:"))
         elif option == 6: 
             # display image_data
@@ -193,13 +193,13 @@ def main():
             image_data = encode_rle(image_data)
             print(f"RLE hex values: {to_hex_string(image_data)}")
 
-        elif option == 9: #wrong           
+        elif option == 9: # reads back the flat values of the original hex string           
             print(f"Flat hex values: {to_hex_string(image_data)}")
 
         else:
             print("Error! Invalid input.") 
 
-if __name__ == "__main__":
+if __name__ == "__main__": # address import issues
     main()
 
 
