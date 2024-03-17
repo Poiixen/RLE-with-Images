@@ -37,10 +37,10 @@ To run the `rle-with-images` project, follow these steps:
 
 ## Contributors
 
-This project was developed by [Jorge Garcia].
+This project was developed by Jorge Garcia.
 
 Contributions to the `rle-with-images` project are welcome! If you have ideas for improvements, new features, or bug fixes, feel free to submit a pull request. 
 
 ## License
 
-This project is licensed under [License Type]. 
+This project is licensed under the [MIT License](LICENSE) 
